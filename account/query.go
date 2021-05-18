@@ -9,20 +9,24 @@ import (
 	hprotocol "github.com/stellar/go/protocols/horizon"
 )
 
-func getAccount(address string) hprotocol.Account {
+func getAccount(address string) (hprotocol.Account, error) {
 	client := hClient.DefaultTestNetClient
 	request := hClient.AccountRequest{AccountID: address}
 	account, err := client.AccountDetail(request)
-	if err != nil {
-		log.Fatal(err)
-		panic(err)
-	}
 
-	return account
+	return account, err
 }
 
 func GetAccount(address string, c *gin.Context) {
-	account := getAccount(address)
+	account, err := getAccount(address)
+	if err != nil {
+		log.Fatal(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"account": nil,
+		})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"status":  http.StatusOK,
 		"account": account,
