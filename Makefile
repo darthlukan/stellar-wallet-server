@@ -7,6 +7,7 @@ all: test build container
 
 .PHONY: test
 test:
+	go test -v ./stellar-wallet-server_test.go
 	go test -v ./account
 	go test -v ./api
 
