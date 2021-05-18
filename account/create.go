@@ -11,7 +11,6 @@ import (
 
 func createKeyPair() (string, string, error) {
 	pair, err := keypair.Random()
-
 	return pair.Address(), pair.Seed(), err
 }
 
