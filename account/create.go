@@ -19,7 +19,13 @@ func CreateAccount(c *gin.Context) {
 	address, seed, err := createKeyPair()
 	if err != nil {
 		log.Fatal(err)
-		panic(err)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  http.StatusInternalServerError,
+			"account": nil,
+			"seed":    nil,
+			"error":   err,
+		})
+		return
 	}
 
 	client := hClient.DefaultTestNetClient
@@ -27,13 +33,20 @@ func CreateAccount(c *gin.Context) {
 	account, err := client.AccountDetail(accountRequest)
 	if err != nil {
 		log.Fatal(err)
-		panic(err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"account": nil,
+			"seed":    nil,
+			"error":   err,
+		})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  http.StatusOK,
 		"account": account,
 		"seed":    seed,
+		"error":   nil,
 	})
 
 	return
