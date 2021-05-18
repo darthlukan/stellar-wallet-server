@@ -3,7 +3,12 @@ VERSION := v0.0.1
 ARCH := amd64
 
 .PHONY: all
-all: build container
+all: test build container
+
+.PHONY: test
+test:
+	go test -v ./account
+	go test -v ./api
 
 .PHONY: build
 build:
