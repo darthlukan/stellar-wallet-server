@@ -19,8 +19,8 @@ func CreateAccount(c *gin.Context) {
 		log.Fatal(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":  http.StatusInternalServerError,
-			"account": nil,
-			"seed":    nil,
+			"account": "",
+			"seed":    "",
 			"error":   err,
 		})
 		return
@@ -30,7 +30,7 @@ func CreateAccount(c *gin.Context) {
 		"status":  http.StatusOK,
 		"address": address,
 		"seed":    seed,
-		"error":   nil,
+		"error":   err,
 	})
 	return
 }
