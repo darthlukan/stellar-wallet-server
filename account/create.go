@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	hClient "github.com/stellar/go/clients/horizonclient"
 	"github.com/stellar/go/keypair"
 )
 
@@ -27,26 +26,11 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
-	client := hClient.DefaultTestNetClient
-	accountRequest := hClient.AccountRequest{AccountID: address}
-	account, err := client.AccountDetail(accountRequest)
-	if err != nil {
-		log.Fatal(err)
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status":  http.StatusBadRequest,
-			"account": nil,
-			"seed":    nil,
-			"error":   err,
-		})
-		return
-	}
-
 	c.JSON(http.StatusOK, gin.H{
 		"status":  http.StatusOK,
-		"account": account,
+		"address": address,
 		"seed":    seed,
 		"error":   nil,
 	})
-
 	return
 }
