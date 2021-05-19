@@ -19,6 +19,21 @@ spec:
       containers:
       - name: server
         image: quay.io/btomlins/stellar-wallet-server:latest
+        env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: stellar-wallet-server-config
+                key: port
+          - name: GIN_MODE:
+            valueFrom:
+              configMapKeyRef:
+                name: stellar-wallet-server-config
+                key: gin-mode
         ports:
-        - containerPort: 80
+        - containerPort:
+          valueFrom:
+            configMapKeyRef:
+              name: stellar-wallet-server-config
+              key: port
 ...

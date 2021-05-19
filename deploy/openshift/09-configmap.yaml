@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stellar-wallet-server-config
+  namespace: stellar-wallet-server
+data:
+  gin-mode: debug
+  port: 8000
+...
