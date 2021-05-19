@@ -1,4 +1,6 @@
-FROM registry.access.redhat.com/ubi8-minimal:latest
+FROM registry.access.redhat.com/ubi8:latest
+
+RUN dnf install golang -y && dnf clean all -y
 
 COPY ./build/stellar-wallet-server /usr/bin/stellar-wallet-server
 

@@ -1,5 +1,5 @@
 BINARY := stellar-wallet-server
-VERSION := v0.0.1
+VERSION := v0.0.2
 ARCH := amd64
 
 .PHONY: all
