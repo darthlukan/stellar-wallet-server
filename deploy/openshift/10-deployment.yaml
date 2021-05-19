@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stellar-wallet-server
+  namespace: stellar-wallet-server
+  labels:
+    app: stellar-wallet-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stellar-wallet-server
+  template:
+    metadata:
+      labels:
+        app: stellar-wallet-server
+    spec:
+      containers:
+      - name: server
+        image: quay.io/btomlins/stellar-wallet-server:latest
+        env:
+          - name: PORT
+            valueFrom:
+              configMapKeyRef:
+                name: stellar-wallet-server-config
+                key: port
+          - name: GIN_MODE:
+            valueFrom:
+              configMapKeyRef:
+                name: stellar-wallet-server-config
+                key: gin-mode
+        ports:
+        - containerPort:
+          valueFrom:
+            configMapKeyRef:
+              name: stellar-wallet-server-config
+              key: port
+...
