@@ -17,23 +17,40 @@ spec:
         app: stellar-wallet-server
     spec:
       containers:
-      - name: server
-        image: quay.io/btomlins/stellar-wallet-server:latest
-        env:
-          - name: PORT
+        - name: server
+          image: quay.io/btomlins/stellar-wallet-server:latest
+          resources: {}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port:
+                valueFrom:
+                  configMapKeyRef:
+                    name: stellar-wallet-server-config
+                    key: port
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port:
+                valueFrom:
+                  configMapKeyRef:
+                    name: stellar-wallet-server-config
+                    key: port
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: stellar-wallet-server-config
+                  key: port
+            - name: GIN_MODE:
+              valueFrom:
+                configMapKeyRef:
+                  name: stellar-wallet-server-config
+                  key: gin-mode
+          ports:
+          - containerPort:
             valueFrom:
               configMapKeyRef:
                 name: stellar-wallet-server-config
                 key: port
-          - name: GIN_MODE:
-            valueFrom:
-              configMapKeyRef:
-                name: stellar-wallet-server-config
-                key: gin-mode
-        ports:
-        - containerPort:
-          valueFrom:
-            configMapKeyRef:
-              name: stellar-wallet-server-config
-              key: port
 ...

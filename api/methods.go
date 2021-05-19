@@ -12,6 +12,17 @@ func Ping(c *gin.Context) {
 	return
 }
 
+func Health(c *gin.Context) {
+	data := gin.H{
+		"status": http.StatusOK,
+		"data": gin.H{
+			"mode": gin.Mode(),
+		},
+	}
+	c.JSON(http.StatusOK, data)
+	return
+}
+
 func CreateAccount(c *gin.Context) {
 	account.CreateAccount(c)
 	return

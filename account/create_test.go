@@ -1,11 +1,13 @@
 package account
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 )
 
 // Empty test because keypair.Random() doesn't require testing on our part.
@@ -16,11 +18,17 @@ func TestCreateAccount(t *testing.T) {
 	c, engine := gin.CreateTestContext(rw)
 	engine.POST("/accounts", CreateAccount)
 
-	var err error
-	c.Request, err = http.NewRequest(http.MethodPost, "/accounts", nil)
+	request, err := http.NewRequestWithContext(c, http.MethodPost, "/accounts", nil)
 	if err != nil {
-		t.Fatalf("POST /accounts: err = %v; want nil", err)
+		t.Fatalf("request: err = %v; want nil", err)
 	}
 
-	engine.HandleContext(c)
+	recorder := httptest.NewRecorder()
+	engine.ServeHTTP(recorder, request)
+
+	jdata := make(map[string]interface{})
+
+	json.Unmarshal(recorder.Body.Bytes(), &jdata)
+
+	assert.EqualValues(t, jdata["status"], http.StatusOK, "the two status should match")
 }
