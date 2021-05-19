@@ -1,37 +1,58 @@
-## Welcome to GitHub Pages
+# Stellar Wallet Server
+[![CodeQL](https://github.com/darthlukan/stellar-wallet-server/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/darthlukan/stellar-wallet-server/actions/workflows/codeql-analysis.yml)
 
-You can use the [editor on GitHub](https://github.com/darthlukan/stellar-wallet-server/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+Author: Brian Tomlinson <darthlukan@gmail.com>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## Description
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Stellar Wallet Server is yet another cryptocurrency Wallet built specifically
+with the [Stellar Network](https://www.stellar.org/) in mind, for now. It is meant
+to provide a REST API for any number of clients seeking a simple means of interacting
+with [Stellar Lumens (XLM)](https://www.stellar.org/lumens).
 
-```markdown
-Syntax highlighted code block
+*IMPORTANT*: _This is a personal project that is not (yet) meant for production use and should be considered highly volatile._
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+## Deploy
 
-1. Numbered
-2. List
+### OpenShift
 
-**Bold** and _Italic_ and `Code` text
+Stellar Wallet Server currently targets OpenShift 4.X for deployment, the requisite manifests reside in the
+`deploy/openshift/` directory of this repository.
 
-[Link](url) and ![Image](src)
+```
+$ oc apply -f deploy/openshift/
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+## Develop
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/darthlukan/stellar-wallet-server/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Development of Stellar Wallet Server requires [Go](https://golang.org/) version 1.16+. New functionality should be provided via packages
+containing their own tests. Packages should export a public method to the `api` package and link that handler function
+to the [Gin](https://gin-gonic.com/) router in `stellar-wallet-server.go`.
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## Test
+
+Tests for Stellar Wallet Server can be executed via the `Makefile`:
+```
+$ make test
+```
+
+The `go test` command will run and provide relevant output.
+
+
+## Contribute
+
+Contributions from the community are very welcome. Please fork this repository and submit your changes to the `main`
+branch via Pull Request. Pull Requests should correspond to an Issue, if one does not exist, please create one before
+submitting your PR.
+
+Only Pull Requests which pass the [CodeQL](https://codeql.github.com/docs/codeql-overview/) at a minimum will be
+accepted. 
+
+
+## License
+
+MIT, see LICENSE file.
