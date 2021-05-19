@@ -13,6 +13,10 @@ func createKeyPair() (string, string, error) {
 	return pair.Address(), pair.Seed(), err
 }
 
+func CreateKeyPair() (string, string, error) {
+	return createKeyPair()
+}
+
 func CreateAccount(c *gin.Context) {
 	address, seed, err := createKeyPair()
 	if err != nil {
