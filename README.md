@@ -16,24 +16,43 @@ with [Stellar Lumens (XLM)](https://www.stellar.org/lumens).
 
 ## Deploy
 
-TODO
+### OpenShift
+
+Stellar Wallet Server currently targets OpenShift 4.X for deployment, the requisite manifests reside in the
+`deploy/openshift/` directory of this repository.
+
+```
+$ oc apply -f deploy/openshift/
+```
 
 
 ## Develop
 
-TODO
+Development of Stellar Wallet Server requires [Go](https://golang.org/) version 1.16+. New functionality should be provided via packages
+containing their own tests. Packages should export a public method to the `api` package and link that handler function
+to the [Gin](https://gin-gonic.com/) router in `stellar-wallet-server.go`.
 
 
 ## Test
 
-TODO
+Tests for Stellar Wallet Server can be executed via the `Makefile`:
+```
+$ make test
+```
+
+The `go test` command will run and provide relevant output.
 
 
 ## Contribute
 
-TODO
+Contributions from the community are very welcome. Please fork this repository and submit your changes to the `main`
+branch via Pull Request. Pull Requests should correspond to an Issue, if one does not exist, please create one before
+submitting your PR.
+
+Only Pull Requests which pass the [CodeQL](https://codeql.github.com/docs/codeql-overview/) at a minimum will be
+accepted. 
 
 
 ## License
 
-TODO
+MIT, see LICENSE file.
