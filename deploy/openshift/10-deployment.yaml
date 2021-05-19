@@ -23,34 +23,16 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port:
-                valueFrom:
-                  configMapKeyRef:
-                    name: stellar-wallet-server-config
-                    key: port
+              port: 8000
           livenessProbe:
             httpGet:
               path: /healthz
-              port:
-                valueFrom:
-                  configMapKeyRef:
-                    name: stellar-wallet-server-config
-                    key: port
+              port: 8000
           env:
             - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: stellar-wallet-server-config
-                  key: port
-            - name: GIN_MODE:
-              valueFrom:
-                configMapKeyRef:
-                  name: stellar-wallet-server-config
-                  key: gin-mode
+              value: "8000"
+            - name: GIN_MODE
+              value: "debug"
           ports:
-          - containerPort:
-            valueFrom:
-              configMapKeyRef:
-                name: stellar-wallet-server-config
-                key: port
+            - containerPort: 8000
 ...

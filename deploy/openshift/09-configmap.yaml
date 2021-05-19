@@ -6,5 +6,5 @@ metadata:
   namespace: stellar-wallet-server
 data:
   gin-mode: debug
-  port: 8000
+  port: "8000"
 ...
