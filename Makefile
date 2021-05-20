@@ -14,6 +14,7 @@ test:
 	go test -v ./harness
 	go test -v ./stellar-wallet-server_test.go
 	go test -v ./account
+	go test -v ./payments
 	go test -v ./api
 
 .PHONY: build
