@@ -1,7 +1,6 @@
 package account
 
 import (
-	"log"
 	"testing"
 
 	"github.com/darthlukan/stellar-wallet-server/harness"
@@ -34,8 +33,6 @@ func TestGetAccount(t *testing.T) {
 	if err != nil {
 		t.Fatalf("getAccount(taccount.Address):err = %v; want nil", err)
 	}
-
-	log.Printf("rtAccount is %T, rtAccount = %v", rtAccount, rtAccount)
 
 	assert.Greater(t, len(rtAccount.Balances), 0, "We should have at least one balance")
 	assert.NotEmpty(t, rtAccount.AccountID, "AccountID should not be empty string")
