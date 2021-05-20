@@ -6,3 +6,5 @@ import (
 
 // Stub, we don't need to test the stellar go SDK
 func TestCreateKeyPair(t *testing.T) {}
+
+func TestGetHorizonClient(t *testing.T) {}
