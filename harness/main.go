@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/darthlukan/stellar-wallet-server/account"
+	"github.com/stellar/go/keypair"
 )
 
 const (
@@ -17,8 +17,13 @@ type TestAccount struct {
 	Seed    string
 }
 
+func createKeyPair() (string, string, error) {
+	pair, err := keypair.Random()
+	return pair.Address(), pair.Seed(), err
+}
+
 func CreateTestAccount() (TestAccount, error) {
-	address, seed, err := account.CreateKeyPair()
+	address, seed, err := createKeyPair()
 	if err != nil {
 		log.Printf("account.CreateKeyPair():err = %v; want nil", err)
 	}
