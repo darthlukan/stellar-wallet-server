@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/darthlukan/stellar-wallet-server/lib"
 	"github.com/gin-gonic/gin"
-	"github.com/stellar-wallet-server/lib"
 )
 
 func CreateAccount(c *gin.Context) {
