@@ -10,6 +10,7 @@ all: test build container
 
 .PHONY: test
 test:
+	go test -v ./lib
 	go test -v ./harness
 	go test -v ./stellar-wallet-server_test.go
 	go test -v ./account
