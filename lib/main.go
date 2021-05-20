@@ -6,26 +6,29 @@ import (
 	"github.com/stellar/go/network"
 )
 
-func GetHorizonClient(clientType string) horizonclient.Client {
+func GetHorizonClient(clientType string) *horizonclient.Client {
+	var client *horizonclient.Client
 	switch clientType {
 	case "test":
-		client := horizonclient.DefaultTestNetClient
+		client = horizonclient.DefaultTestNetClient
 	case "prod":
-		client := horizonclient.DefaultPublicNetClient
+		client = horizonclient.DefaultPublicNetClient
 	default:
-		client := horizonclient.DefaultTestNetClient
+		client = horizonclient.DefaultTestNetClient
 	}
 	return client
 }
 
 func GetNetworkPassphrase(environ string) string {
+	var networkPassphrase string
+
 	switch environ {
 	case "test":
-		networkPassphrase := network.TestNetworkPassphrase
+		networkPassphrase = network.TestNetworkPassphrase
 	case "prod":
-		networkPassphrase := network.PublicNetworkPassphrase
+		networkPassphrase = network.PublicNetworkPassphrase
 	default:
-		networkPassphrase := network.TestNetworkPassphrase
+		networkPassphrase = network.TestNetworkPassphrase
 	}
 	return networkPassphrase
 }
