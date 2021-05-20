@@ -23,26 +23,26 @@ func CreateTestAccount() (TestAccount, error) {
 		log.Printf("account.CreateKeyPair():err = %v; want nil", err)
 	}
 
-	account := TestAccount{
+	taccount := TestAccount{
 		Address: address,
 		Seed:    seed,
 	}
-	return TestAccount, err
+	return taccount, err
 }
 
-func FundTestAccount(account *TestAccount) error {
+func FundTestAccount(account *TestAccount) (string, error) {
 	address := account.Address
 	resp, err := http.Get(friendBotUrl + address)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	log.Printf("body is %T; body = %v", body, string(body))
-	return nil
+	accountJson := string(body)
+	return accountJson, nil
 }
