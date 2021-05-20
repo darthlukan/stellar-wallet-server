@@ -5,20 +5,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/stellar/go/keypair"
+	"github.com/stellar-wallet-server/lib"
 )
 
-func createKeyPair() (string, string, error) {
-	pair, err := keypair.Random()
-	return pair.Address(), pair.Seed(), err
-}
-
-func CreateKeyPair() (string, string, error) {
-	return createKeyPair()
-}
-
 func CreateAccount(c *gin.Context) {
-	address, seed, err := createKeyPair()
+	address, seed, err := lib.CreateKeyPair()
 	if err != nil {
 		log.Fatal(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
