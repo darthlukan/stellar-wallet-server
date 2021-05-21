@@ -1,6 +1,37 @@
 package lib
 
-import "github.com/stellar/go/keypair"
+import (
+	"github.com/stellar/go/clients/horizonclient"
+	"github.com/stellar/go/keypair"
+	"github.com/stellar/go/network"
+)
+
+func GetHorizonClient(clientType string) *horizonclient.Client {
+	var client *horizonclient.Client
+	switch clientType {
+	case "test":
+		client = horizonclient.DefaultTestNetClient
+	case "prod":
+		client = horizonclient.DefaultPublicNetClient
+	default:
+		client = horizonclient.DefaultTestNetClient
+	}
+	return client
+}
+
+func GetNetworkPassphrase(environ string) string {
+	var networkPassphrase string
+
+	switch environ {
+	case "test":
+		networkPassphrase = network.TestNetworkPassphrase
+	case "prod":
+		networkPassphrase = network.PublicNetworkPassphrase
+	default:
+		networkPassphrase = network.TestNetworkPassphrase
+	}
+	return networkPassphrase
+}
 
 func CreateKeyPair() (string, string, error) {
 	pair, err := keypair.Random()

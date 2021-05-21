@@ -4,13 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/darthlukan/stellar-wallet-server/lib"
 	"github.com/gin-gonic/gin"
 	hClient "github.com/stellar/go/clients/horizonclient"
 	hprotocol "github.com/stellar/go/protocols/horizon"
 )
 
-func getAccount(address string) (hprotocol.Account, error) {
-	client := hClient.DefaultTestNetClient
+func QueryAccount(environ, address string) (hprotocol.Account, error) {
+	client := lib.GetHorizonClient(environ)
 	request := hClient.AccountRequest{AccountID: address}
 	account, err := client.AccountDetail(request)
 
@@ -18,7 +19,7 @@ func getAccount(address string) (hprotocol.Account, error) {
 }
 
 func GetAccount(address string, c *gin.Context) {
-	account, err := getAccount(address)
+	account, err := QueryAccount("prod", address)
 	if err != nil {
 		log.Fatal(err)
 		c.JSON(http.StatusBadRequest, gin.H{

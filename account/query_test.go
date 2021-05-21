@@ -9,7 +9,7 @@ import (
 
 func TestGetAccount(t *testing.T) {
 	// "TEST" is not a valid address, so we expect failure
-	account, err := getAccount("TEST")
+	account, err := QueryAccount("test", "TEST")
 	if len(account.AccountID) > 0 {
 		t.Errorf("getAccount('TEST'):account.AccountID = %v; want ''", account.AccountID)
 	}
@@ -29,7 +29,7 @@ func TestGetAccount(t *testing.T) {
 		t.Fatalf("harness.FundTestAccount(&taccount):err = %v; want nil", er)
 	}
 
-	rtAccount, err := getAccount(taccount.Address)
+	rtAccount, err := QueryAccount("test", taccount.Address)
 	if err != nil {
 		t.Fatalf("getAccount(taccount.Address):err = %v; want nil", err)
 	}

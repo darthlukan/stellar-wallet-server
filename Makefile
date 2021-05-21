@@ -1,7 +1,7 @@
 BINARY := stellar-wallet-server
 REGISTRY := quay.io
 REPO := btomlins
-VERSION := v0.0.2
+VERSION := v0.0.3
 ARCH := amd64
 OS := linux
 
@@ -14,6 +14,7 @@ test:
 	go test -v ./harness
 	go test -v ./stellar-wallet-server_test.go
 	go test -v ./account
+	go test -v ./payments
 	go test -v ./api
 
 .PHONY: build
