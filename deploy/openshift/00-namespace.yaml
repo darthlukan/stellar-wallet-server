@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: stellar-wallet-server
+  labels:
+    app: stellar-wallet-server
   annotations:
     openshift.io/description: "Namespace to house the Stellar Wallet Server."
     openshift.io/display-name: "Stellar Wallet Server"
