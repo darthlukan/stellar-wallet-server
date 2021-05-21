@@ -1,6 +1,8 @@
 package payments
 
 import (
+	"time"
+
 	"github.com/stellar/go/clients/horizonclient"
 	"github.com/stellar/go/keypair"
 	"github.com/stellar/go/protocols/horizon"
@@ -41,6 +43,11 @@ func SignTransaction(environ string, srcKeyPair *keypair.Full, txn *txnbuild.Tra
 	return txn, err
 }
 
+func SubmitTransaction(client *horizonclient.Client, txn *txnbuild.Transaction) (horizon.Transaction, error) {
+	resp, err := client.SubmitTransaction(txn)
+	return resp, err
+}
+
 func SendPayment(environ, srcSecKey, destAddr, amount, assetType string) (horizon.Transaction, error) {
 	client := lib.GetHorizonClient(environ)
 
@@ -76,9 +83,21 @@ func SendPayment(environ, srcSecKey, destAddr, amount, assetType string) (horizo
 		return horizon.Transaction{}, err
 	}
 
-	resp, err := client.SubmitTransaction(txn)
-	if err != nil {
-		return horizon.Transaction{}, err
+	maxRetries := 10
+	retries := 0
+	var sentTxn horizon.Transaction
+
+	for retries <= maxRetries {
+		resp, err := SubmitTransaction(client, txn)
+		if err != nil {
+			retries += 1
+			time.Sleep(5 * time.Second)
+			continue
+		} else {
+			sentTxn = resp
+			break
+		}
 	}
-	return resp, err
+
+	return sentTxn, err
 }
