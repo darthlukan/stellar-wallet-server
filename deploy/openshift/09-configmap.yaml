@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: stellar-wallet-server-config
   namespace: stellar-wallet-server
+  labels:
+    app: stellar-wallet-server
 data:
   gin-mode: debug
   port: "8000"
