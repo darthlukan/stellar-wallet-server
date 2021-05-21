@@ -1,6 +1,7 @@
 package payments
 
 import (
+	"log"
 	"testing"
 
 	"github.com/darthlukan/stellar-wallet-server/account"
@@ -32,7 +33,7 @@ func TestBuildPaymentTransaction(t *testing.T) {
 	}
 
 	destAddr := testDestAccount.Address
-	testAmount := "10"
+	testAmount := "5"
 	baseFee := txnbuild.MinBaseFee
 	timeout := txnbuild.NewInfiniteTimeout()
 	asset := txnbuild.NativeAsset{}
@@ -67,9 +68,19 @@ func TestBuildPaymentTransaction(t *testing.T) {
 		}
 		assert.Greaterf(t, len(tx.Signatures()), 0, "should be greater")
 	})
+
+	t.Run("TestSendTransaction", func(t *testing.T) {
+		tx, err := SendPayment("test", srcKeyPair.Seed(), destAddr, testAmount, "XLM")
+		if err != nil {
+			t.Fatalf("SendPayment:err = %v; want nil", err)
+		}
+		log.Printf("tx is %T; tx = %v;", tx, tx)
+		assert.NotEmptyf(t, tx.AccountSequence, "Should not be empty")
+	})
 }
 
 // This is covered by a nested test run, no need to do it twice
 func TestSignTransaction(t *testing.T) {}
 
+// Also covered by nested test run
 func TestSendPayment(t *testing.T) {}
