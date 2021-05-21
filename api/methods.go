@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/darthlukan/stellar-wallet-server/account"
+	"github.com/darthlukan/stellar-wallet-server/payments"
 	"github.com/gin-gonic/gin"
 )
 
@@ -51,7 +52,7 @@ func SendPayment(c *gin.Context) {
 	amount := data["amount"].(string)
 	assetType := data["asset"].(string)
 
-	txn, err := SendPayment(environ, srcSecKey, destAddr, amount, assetType)
+	txn, err := payments.SendPayment(environ, srcSecKey, destAddr, amount, assetType)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": http.StatusInternalServerError,
