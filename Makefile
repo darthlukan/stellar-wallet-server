@@ -1,7 +1,7 @@
 BINARY := stellar-wallet-server
 REGISTRY := quay.io
 REPO := btomlins
-VERSION := v0.0.4
+VERSION := v0.0.5
 ARCH := amd64
 OS := linux
 

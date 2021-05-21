@@ -23,16 +23,16 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 8000
+              port: 8080
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 8000
+              port: 8080
           env:
             - name: PORT
-              value: "8000"
+              value: "8080"
             - name: GIN_MODE
               value: "debug"
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
 ...
