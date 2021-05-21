@@ -70,17 +70,17 @@ func SendPayment(environ, srcSecKey, destAddr, amount, assetType string) (horizo
 		txnbuild.NativeAsset{})
 
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
 
 	txn, err := SignTransaction(environ, srcKeyPair, tx)
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
 
 	resp, err := client.SubmitTransaction(txn)
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
 	return resp, err
 }
