@@ -4,6 +4,8 @@ kind: NetworkPolicy
 metadata:
   name: deny-by-default
   namespace: stellar-wallet-server
+  labels:
+    app: stellar-wallet-server
 spec:
   podSelector: {}
   ingres: []
