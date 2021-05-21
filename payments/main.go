@@ -1,8 +1,6 @@
 package payments
 
 import (
-	"log"
-
 	"github.com/stellar/go/clients/horizonclient"
 	"github.com/stellar/go/keypair"
 	"github.com/stellar/go/protocols/horizon"
@@ -50,7 +48,7 @@ func SendPayment(environ, srcSecKey, destAddr, amount, assetType string) (horizo
 	destAccount, err := client.AccountDetail(destAccRequest)
 	if err != nil {
 		// TODO: Bubble up a "destination account does not exist or is invalid" error
-		log.Panic(err)
+		return horizon.Transaction{}, err
 	}
 
 	srcKeyPair := keypair.MustParseFull(srcSecKey)
@@ -58,7 +56,7 @@ func SendPayment(environ, srcSecKey, destAddr, amount, assetType string) (horizo
 	srcAccount, err := client.AccountDetail(srcAccRequest)
 	if err != nil {
 		// TODO: Bubble up a "Your account is not funded or does not exist" error
-		log.Panic(err)
+		return horizon.Transaction{}, err
 	}
 
 	tx, err := BuildPaymentTransaction(
@@ -70,17 +68,17 @@ func SendPayment(environ, srcSecKey, destAddr, amount, assetType string) (horizo
 		txnbuild.NativeAsset{})
 
 	if err != nil {
-		return nil, err
+		return horizon.Transaction{}, err
 	}
 
 	txn, err := SignTransaction(environ, srcKeyPair, tx)
 	if err != nil {
-		return nil, err
+		return horizon.Transaction{}, err
 	}
 
 	resp, err := client.SubmitTransaction(txn)
 	if err != nil {
-		return nil, err
+		return horizon.Transaction{}, err
 	}
 	return resp, err
 }
