@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: stellar-wallet-server
   namespace: stellar-wallet-server
+  labels:
+    app: stellar-wallet-server
 spec:
   ports:
     - name: server
