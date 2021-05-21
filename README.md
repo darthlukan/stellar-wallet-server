@@ -1,5 +1,6 @@
 # Stellar Wallet Server
 [![CodeQL](https://github.com/darthlukan/stellar-wallet-server/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/darthlukan/stellar-wallet-server/actions/workflows/codeql-analysis.yml)
+[![Go](https://github.com/darthlukan/stellar-wallet-server/actions/workflows/go.yml/badge.svg)](https://github.com/darthlukan/stellar-wallet-server/actions/workflows/go.yml)
 
 Author: Brian Tomlinson <darthlukan@gmail.com>
 
